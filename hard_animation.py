@@ -23,17 +23,21 @@ def draw_fourier_series():
     canvas.delete("all")
     x_start, x_end = 50, 550
     y_start, y_end = 200, 200
-    x_coords = [x_start]
-    y_coords = [y_start]
-    for i in range(num_terms, 0, -1):
+    x = x_start
+    y = y_start
+    x_center, y_center = x, y
+    radius = amplitude * 4 / math.pi
+    canvas.create_oval(x_center - radius, y_center - radius, x_center + radius,
+                       y_center + radius, outline="black")
+    for i in range(1, num_terms+1):
+        prev_x, prev_y = x, y
         n = 2 * i - 1
         radius = amplitude * (4 / (n * math.pi))
-        x = x_coords[-1] + radius * math.cos(n * frequency * t + phase)
-        y = y_coords[-1] + radius * math.sin(n * frequency * t + phase)
-        x_coords.insert(0, x)
-        y_coords.insert(0, y)
+        x += radius * math.cos(n * frequency * t + phase)
+        y += radius * math.sin(n * frequency * t + phase)
         canvas.create_oval(x - 5, y - 5, x + 5, y + 5, fill="black")
-    canvas.create_line(x_coords, y_coords, fill="blue")
+        canvas.create_line(prev_x, prev_y, x, y)
+    canvas.create_line(x, y, x_end, y)
 
 # функция для обновления анимации
 def update_animation():
