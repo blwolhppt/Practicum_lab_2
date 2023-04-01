@@ -31,7 +31,7 @@ def move_particle():
         y = radius
         vy = -vy
     # Call the move_particle function after a delay of 10 milliseconds
-    root.after(40, move_particle)
+    root.after(20, move_particle)
 
 
 # Call the move_particle function to start the animation
