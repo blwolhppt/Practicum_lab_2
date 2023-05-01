@@ -3,19 +3,15 @@ import keyboard
 import time
 import random
 
-# setting up the game window
 window = Tk()
 window.title("Flappy Bird")
 window.geometry("400x500")
 
-# setting up the canvas
 canvas = Canvas(window, bg="black", width=400, height=500)
 canvas.pack()
 
-# adding the bird
 bird = canvas.create_oval(50, 225, 75, 250, fill="white")
 
-# adding the pipes
 pipes = []
 for i in range(3):
     x = 400 + (i * 150)
@@ -25,17 +21,17 @@ for i in range(3):
                                           fill="white")
     pipes.append((pipe_top, pipe_bottom))
 
-gravity = 0.5
-jump = 1
+gravity = 0.1
+jump = 0.5
 velocity = 0
 
 
 def move_bird_up():
     global velocity
     velocity -= jump
-    canvas.move(bird, 0, velocity)
+    canvas.move(bird, 0, velocity*0.3)
     window.update()
-    time.sleep(0.01)
+    time.sleep(0.05)
     velocity += gravity
 
 
@@ -44,7 +40,7 @@ def move_bird_down():
     velocity -= jump
     canvas.move(bird, 0, -velocity)
     window.update()
-    time.sleep(0.01)
+    time.sleep(0.05)
     velocity += gravity
 
 
@@ -57,7 +53,7 @@ def move_pipes():
             canvas.coords(pipe[0], 400, 0, 350, y)
             canvas.coords(pipe[1], 400, y + 100, 350, 500)
     window.update()
-    time.sleep(0.03)
+    time.sleep(0.05)
 
 
 def check_collision():
@@ -86,9 +82,10 @@ def start_game():
 
         if keyboard.is_pressed('up'):
             move_bird_up()
-
-        if keyboard.is_pressed('down'):
+        else:
             move_bird_down()
+        #if keyboard.is_pressed('down'):
+        #    move_bird_down()
 
         move_pipes()
 
